@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title> CodeMirror </title>
+    <link href="/static/img/favicon.png" rel="icon" type="image/png">
+    <link rel="stylesheet" href="/static/css/codemirror.css">
+    <link rel="stylesheet" href="/static/css/dialog.css">
+  </head>
+  <body>
+  <form><textarea id="code" name="code"></textarea></form>
+  <div style="font-size: 13px; width: 300px;">Key buffer: <span id="command-display"></span></div>
+  <div style="font-size: 13px; width: 300px;">Vim mode: <span id="vim-mode"></span></div>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/codemirror.js"></script>
+    <script src="/static/js/dialog/dialog.js"></script>
+    <script src="/static/js/search/searchcursor.js"></script>
+    <script src="/static/js/clike.js"></script>
+    <script src="/static/js/matchbrackets.js"></script>
+    <script src="/static/js/closebrackets.js"></script>
+    <script src="/static/js/vim.js"></script>
+      <script>
+      CodeMirror.commands.save = function(){ alert("Saving"); };
+      var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        lineNumbers: true,
+        lineWrapping: true,
+        autoCloseTags: true,
+        autoCloseBrackets: true,
+        mode: "text/x-csrc",
+        keyMap: "vim",
+        matchBrackets: true,
+        showCursorWhenSelecting: true
+      });
+      var commandDisplay = document.getElementById('command-display');
+      var keys = '';
+      CodeMirror.on(editor, 'vim-keypress', function(key) {
+        keys = keys + key;
+        commandDisplay.innerText = keys;
+      });
+      CodeMirror.on(editor, 'vim-command-done', function(e) {
+        keys = '';
+        commandDisplay.innerHTML = keys;
+      });
+      var vimMode = document.getElementById('vim-mode');
+      CodeMirror.on(editor, 'vim-mode-change', function(e) {
+        vimMode.innerText = JSON.stringify(e);
+      });
+
+      $(".CodeMirror").css("height",$(window).height()-75);
+      $(window).resize(function() {
+         $(".CodeMirror").css("height",$(window).height()-75);
+      });
+    </script>
+  </body>
+</html>
