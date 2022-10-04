@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title> CodeMirror </title>
+    <title> libai.ssh </title>
     <link href="/static/img/favicon.png" rel="icon" type="image/png">
     <link rel="stylesheet" href="/static/css/codemirror.css">
     <link rel="stylesheet" href="/static/css/dialog.css">
@@ -19,6 +19,7 @@
     <script src="/static/js/matchbrackets.js"></script>
     <script src="/static/js/closebrackets.js"></script>
     <script src="/static/js/vim.js"></script>
+    <script src="/static/js/ext.js"></script>
       <script>
       CodeMirror.commands.save = function(){ alert("Saving"); };
       var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
@@ -44,6 +45,15 @@
       var vimMode = document.getElementById('vim-mode');
       CodeMirror.on(editor, 'vim-mode-change', function(e) {
         vimMode.innerText = JSON.stringify(e);
+      });
+
+      editor.setOption("extraKeys", {
+        "Ctrl-Enter": function(cm) {
+            var pos=editor.getCursor();
+            var line=editor.getLine(pos.line);
+            var fun=line.substring(0,line.indexOf(":"))+"()";
+            window.eval(fun);
+        }
       });
 
       $(".CodeMirror").css("height",$(window).height()-75);
