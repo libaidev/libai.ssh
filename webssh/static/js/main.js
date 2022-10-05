@@ -855,4 +855,10 @@ jQuery(function($){
     }
   }
 
+    waiter = $('#waiter');
+    waiter.css({"position":"absolute","z-index":"99999","right":"100px","color":"yellow","font-size":"300%"});
+    var reg = new RegExp("(^|&)title=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    waiter.text(unescape(r[2]));
+
 });
