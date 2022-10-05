@@ -123,6 +123,25 @@ if(ops=="ls"){
 $.get("/file","",function(data){editor.setValue(data);},"text");
 }else{
 $(document).attr("title",ops);
-$.get("/file?filename="+ops,"",function(data){editor.setValue(data);},"text");
+$.get("/file?filename="+ops,"",function(data,textStatus,jqxhr){
+editor.doc.file_name=jqxhr.getResponseHeader("file_name");
+editor.doc.file_path=jqxhr.getResponseHeader("file_path");
+editor.setValue(data);
+var date = new Date();
+$("#doc-status").text(editor.doc.file_name+" "+date.getHours()+"-"+date.getMinutes()+"-"+date.getSeconds()+" opened ");
+},"text");
 }
+}
+
+function savefile(){
+var filename=editor.doc.file_name;
+var filepath=editor.doc.file_path;
+var filedata=editor.doc.getValue();
+var xhr = new XMLHttpRequest();
+xhr.open("post", "/file", true);
+xhr.setRequestHeader("Content-Type", "application/json");
+var data = JSON.stringify({"file_name":filename,"file_data": filedata});
+xhr.send(data);
+var date = new Date();
+$("#doc-status").text(filename+" "+date.getHours()+"-"+date.getMinutes()+"-"+date.getSeconds()+" saved ");
 }

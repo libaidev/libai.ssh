@@ -11,6 +11,7 @@
   <form><textarea id="code" name="code"></textarea></form>
   <div style="font-size: 13px; width: 300px;">Key buffer: <span id="command-display"></span></div>
   <div style="font-size: 13px; width: 300px;">Vim mode: <span id="vim-mode"></span></div>
+  <div style="font-size: 13px; width: 300px;">Doc status: <span id="doc-status"></span></div>
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/codemirror.js"></script>
     <script src="/static/js/dialog/dialog.js"></script>
@@ -53,6 +54,13 @@
             var line=editor.getLine(pos.line);
             var fun=line.substring(0,line.indexOf(":"))+"()";
             window.eval(fun);
+        },"Ctrl-S": function(cm) {
+            savefile();
+        },"Ctrl-W": function(cm) {
+            var pos=editor.getCursor();
+            var line=editor.getLine(pos.line);
+            var fun=line.substring(0,line.indexOf(":"))+"()";
+            alert("SDDDDD");
         }
       });
 
