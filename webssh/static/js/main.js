@@ -54,7 +54,7 @@ jQuery(function($){
       state = DISCONNECTED,
       messages = {1: 'This client is connecting ...', 2: 'This client is already connnected.'},
       key_max_size = 16384,
-      fields = ['hostname', 'port', 'username'],
+      fields = ['hostname', 'port', 'username','privatekey','passphrase'],
       form_keys = fields.concat(['password', 'totp']),
       opts_keys = ['bgcolor', 'title', 'encoding', 'command', 'term', 'fontsize', 'fontcolor'],
       url_form_data = {},
