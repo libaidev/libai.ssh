@@ -1,3 +1,6 @@
+# -* - coding: UTF-8 -* -
+# !/usr/bin/python3
+
 import psycopg2
 #连接数据库
 conn = psycopg2.connect(database='test',user='postg',

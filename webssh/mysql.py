@@ -1,3 +1,6 @@
+# -* - coding: UTF-8 -* -
+# !/usr/bin/python3
+
 import pymysql
 
 from typing import Optional, Awaitable

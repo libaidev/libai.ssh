@@ -122,6 +122,7 @@ var ops=line.substring(line.indexOf(":")+1,line.length);
 if(ops=="ls"){
 $.get("/file","",function(data){editor.setValue(data);},"text");
 }else{
+$(document).attr("title",ops);
 $.get("/file?filename="+ops,"",function(data){editor.setValue(data);},"text");
 }
 }

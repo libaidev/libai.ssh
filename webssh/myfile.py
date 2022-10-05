@@ -1,3 +1,6 @@
+# -* - coding: UTF-8 -* -
+# !/usr/bin/python3
+
 from typing import Optional, Awaitable
 from tornado.escape import json_decode
 import tornado.web
