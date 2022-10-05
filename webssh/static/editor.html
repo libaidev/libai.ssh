@@ -6,6 +6,7 @@
     <link href="/static/img/favicon.png" rel="icon" type="image/png">
     <link rel="stylesheet" href="/static/css/codemirror.css">
     <link rel="stylesheet" href="/static/css/dialog.css">
+    <link rel="stylesheet" href="/static/css/theme/monokai.css">
   </head>
   <body>
   <form><textarea id="code" name="code"></textarea></form>
@@ -20,6 +21,8 @@
     <script src="/static/js/matchbrackets.js"></script>
     <script src="/static/js/closebrackets.js"></script>
     <script src="/static/js/vim.js"></script>
+    <script src="/static/js/mode/shell/shell.js"></script>
+    <script src="/static/js/addon/selection/active-line.js"></script>
     <script src="/static/js/ext.js"></script>
       <script>
       CodeMirror.commands.save = function(){ alert("Saving"); };
@@ -28,9 +31,11 @@
         lineWrapping: true,
         autoCloseTags: true,
         autoCloseBrackets: true,
-        mode: "text/x-csrc",
+        autofocus: true,
+        mode: "text/x-sh",
         keyMap: "vim",
         matchBrackets: true,
+        styleActiveLine: true,
         showCursorWhenSelecting: true
       });
       var commandDisplay = document.getElementById('command-display');
@@ -57,12 +62,11 @@
         },"Ctrl-S": function(cm) {
             savefile();
         },"Ctrl-W": function(cm) {
-            var pos=editor.getCursor();
-            var line=editor.getLine(pos.line);
-            var fun=line.substring(0,line.indexOf(":"))+"()";
-            alert("SDDDDD");
+
         }
       });
+
+      editor.setOption("theme", "monokai");
 
       $(".CodeMirror").css("height",$(window).height()-75);
       $(window).resize(function() {
