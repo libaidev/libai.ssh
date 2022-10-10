@@ -1,5 +1,11 @@
-function  blankline(){
-    session.setValue(session.getValue().replaceAll(/\n\s+\n/ig,'\n').replaceAll('\n\n','\n'));
+function execfun(){
+var pos=editor.getCursor();
+var code=editor.getLine(pos.line);
+window.eval(code);
+}
+
+function blankline(){
+    editor.setValue(editor.getValue().replaceAll(/\n\s+\n/ig,'\n').replaceAll('\n\n','\n'));
 }
 
 function password(pasLen){
@@ -47,11 +53,8 @@ session.insert(session.getLength(),window.btoa(val));
 session.setValue(session.getValue());
 session.selection.setSelectionRange(new Range(0,0,0,0));
 }
-
-function host(){
-var pos=editor.getCursor();
-var line=editor.getLine(pos.line);
-var line=line.substring(line.indexOf(":")+1,line.length);
+function $h(line){host(line);}
+function host(line){
 var arrline=line.split("|");
 var privatekey = "";
 if (arrline[5] != '')
@@ -115,10 +118,7 @@ function mysql(){
 
 }
 
-function file(){
-var pos=editor.getCursor();
-var line=editor.getLine(pos.line);
-var ops=line.substring(line.indexOf(":")+1,line.length);
+function file(ops){
 if(ops=="ls"){
 $.get("/file","",function(data){editor.setValue(data);},"text");
 }else{
@@ -144,4 +144,16 @@ var data = JSON.stringify({"file_name":filename,"file_data": filedata});
 xhr.send(data);
 var date = new Date();
 $("#doc-status").text(filename+" "+date.getHours()+"-"+date.getMinutes()+"-"+date.getSeconds()+" saved ");
+}
+
+function mysql(url){
+var code=editor.getValue();
+console.log(code);
+$.get("/mysql?sql="+url,"",function(data,textStatus,jqxhr){
+editor.setValue(data);
+},"text");
+}
+
+function pgsql(host, user, passwd, db, port){
+var url="host, user, passwd, db, port"
 }

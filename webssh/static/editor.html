@@ -62,14 +62,17 @@
 
       editor.setOption("extraKeys", {
         "Ctrl-Enter": function(cm) {
-            var pos=editor.getCursor();
-            var line=editor.getLine(pos.line);
-            var fun=line.substring(0,line.indexOf(":"))+"()";
-            window.eval(fun);
+            execfun();
         },"Ctrl-S": function(cm) {
             savefile();
-        },"Ctrl-W": function(cm) {
-
+        },"Ctrl-O": function(cm) {
+          var pos=editor.getCursor();
+          var line=editor.getLine(pos.line);
+          if(line==""){
+            file("ls");
+          }else{
+            file(line);
+          }
         }
       });
 
