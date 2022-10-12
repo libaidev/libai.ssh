@@ -39,6 +39,7 @@ htmlcov/
 .pytest_cache/
 nosetests.xml
 coverage.xml
+.idea
 
 # Translations
 *.mo
