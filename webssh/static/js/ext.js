@@ -114,10 +114,6 @@ function ip(){
 
 }
 
-function mysql(){
-
-}
-
 function file(ops){
 if(ops=="ls"){
 $.get("/file","",function(data){editor.setValue(data);},"text");
@@ -146,14 +142,20 @@ var date = new Date();
 $("#doc-status").text(filename+" "+date.getHours()+"-"+date.getMinutes()+"-"+date.getSeconds()+" saved ");
 }
 
-function mysql(url){
+function mysql(){
 var code=editor.getValue();
-console.log(code);
-$.get("/mysql?sql="+url,"",function(data,textStatus,jqxhr){
-editor.setValue(data);
+var db = editor.getLine(1);
+var sql = editor.getLine(2);
+$.get("/mysql?db="+db+"&sql="+sql,"",function(data,textStatus,jqxhr){
+editor.setValue("mysql()\n"+db+"\n"+sql+"\n"+"==========\n"+data);
 },"text");
 }
 
-function pgsql(host, user, passwd, db, port){
-var url="host, user, passwd, db, port"
+function pgsql(){
+var code=editor.getValue();
+var db = editor.getLine(1);
+var sql = editor.getLine(2);
+$.get("/pgsql?db="+db+"&sql="+sql,"",function(data,textStatus,jqxhr){
+editor.setValue("pgsql()\n"+db+"\n"+sql+"\n"+"==========\n"+data);
+},"text");
 }

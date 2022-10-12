@@ -6,8 +6,8 @@ from tornado.options import options
 
 from webssh import handler
 from webssh.handler import IndexHandler, WsockHandler, NotFoundHandler
-from webssh.myfile import FileHandler
-from webssh.mysql import MysqlHandler
+from webssh.libai_file import FileHandler
+from webssh.libai_mysql import MysqlHandler
 from webssh.settings import (
     get_app_settings, get_host_keys_settings, get_policy_setting,
     get_ssl_context, get_server_settings, check_encoding_setting
