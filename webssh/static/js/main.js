@@ -381,7 +381,7 @@ jQuery(function($){
     }
 
     var term = new window.Terminal(termOptions);
-
+    window.libaiterm = term;
     term.fitAddon = new window.FitAddon.FitAddon();
     term.loadAddon(term.fitAddon);
 

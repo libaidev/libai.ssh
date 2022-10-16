@@ -81,7 +81,8 @@ class MainWindow:
             print("You clicked me.")
         elif lparam == win32con.WM_LBUTTONDBLCLK:
             print("You double-clicked me - goodbye")
-            win32gui.DestroyWindow(self.hwnd)
+            # win32gui.DestroyWindow(self.hwnd)
+            os.system("start http://127.0.0.1:8888/libai")
         elif lparam == win32con.WM_RBUTTONUP:
             print("You right clicked me.")
             menu = win32gui.CreatePopupMenu()
