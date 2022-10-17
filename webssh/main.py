@@ -7,7 +7,8 @@ from tornado.options import options
 from webssh import handler
 from webssh.handler import IndexHandler, WsockHandler, NotFoundHandler
 from webssh.libai import LibaiHandler
-from webssh.libai_file import FileHandler
+from webssh.libai_file import FileHandler, FolderHandler
+from webssh.libai_mail import MailHandler
 from webssh.libai_mysql import MysqlHandler
 from webssh.settings import (
     get_app_settings, get_host_keys_settings, get_policy_setting,
@@ -24,7 +25,9 @@ def make_handlers(loop, options):
                                   host_keys_settings=host_keys_settings)),
         (r'/ws', WsockHandler, dict(loop=loop)),
         (r'/file', FileHandler),
+        (r'/folder', FolderHandler),
         (r'/mysql', MysqlHandler),
+        (r'/mail', MailHandler),
         (r'/libai', LibaiHandler)
     ]
     return handlers

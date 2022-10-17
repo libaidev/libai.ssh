@@ -114,9 +114,15 @@ function ip(){
 
 }
 
+function folder(){
+
+}
+
 function file(ops){
 if(ops=="ls"){
-$.get("/file","",function(data){editor.setValue(data);},"text");
+$.get("/file","",function(data,textStatus,jqxhr){
+editor.doc.file_path=jqxhr.getResponseHeader("file_path");
+editor.setValue(data);},"text");
 }else{
 $(document).attr("title",ops);
 $.get("/file?filename="+ops,"",function(data,textStatus,jqxhr){
@@ -157,5 +163,21 @@ var db = editor.getLine(1);
 var sql = editor.getLine(2);
 $.get("/pgsql?db="+db+"&sql="+sql,"",function(data,textStatus,jqxhr){
 editor.setValue("pgsql()\n"+db+"\n"+sql+"\n"+"==========\n"+data);
+},"text");
+}
+
+function mail(){
+var pos=editor.getCursor();
+var file=editor.getLine(pos.line);
+
+var file_path=editor.doc.file_path;
+if(file.indexOf("\\") > 0 || file.indexOf("/") > 0){
+file_path=file;
+}else{
+file_path=editor.doc.file_path+file;
+}
+
+$.get("/mail?mail_file="+file_path,"",function(data,textStatus,jqxhr){
+alert(data);
 },"text");
 }

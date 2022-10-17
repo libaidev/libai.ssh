@@ -1,23 +1,24 @@
 # -* - coding: UTF-8 -* -
 # !/usr/bin/python3
 
-from typing import Optional, Awaitable
-from tornado.escape import json_decode
-import tornado.web
 import os
+from typing import Optional, Awaitable
+import tornado.web
+from tornado.escape import json_decode
+
+
+def file_filter(f):
+    if f[-4:] in ['.txt', '.log', '.md']:
+        return True
+    else:
+        return False
 
 
 class FileHandler(tornado.web.RequestHandler):
-    doc_home = "d:/opslog"
+    doc_home = "d:/opslog/"
 
     def data_received(self, chunk: bytes) -> Optional[Awaitable[None]]:
         pass
-
-    def file_filter(self, f):
-        if f[-4:] in ['.txt', '.log', '.md']:
-            return True
-        else:
-            return False
 
     def get(self):
         file_name = self.get_argument("filename", default="ls")
@@ -26,10 +27,11 @@ class FileHandler(tornado.web.RequestHandler):
             (file_path, file_name) = os.path.split(file_name)
 
         if file_name == "ls":
-            files = os.listdir(self.doc_home)
-            files = list(filter(self.file_filter, files))
-            with open(os.path.join(self.doc_home, "filelist.log"), "r", encoding="utf-8", errors="ignore") as f:
+            files = os.listdir(file_path)
+            files = list(filter(file_filter, files))
+            with open(os.path.join(file_path, "filelist.log"), "r", encoding="utf-8", errors="ignore") as f:
                 files.extend(f.readlines())
+            self.set_header("file_path", file_path)
             self.write("\n".join(files))
         else:
             self.set_header("file_name", file_name)
@@ -45,6 +47,21 @@ class FileHandler(tornado.web.RequestHandler):
         with open(os.path.join(file_path, file_name), mode='w+', encoding='UTF-8') as f:
             f.write(data['file_data'])
         self.write("save ok")
+
+    def set_default_headers(self):
+        self.set_header('Content-type', 'application/json;charset=utf-8')
+
+
+class FolderHandler(tornado.web.RequestHandler):
+
+    def data_received(self, chunk: bytes) -> Optional[Awaitable[None]]:
+        pass
+
+    def get(self):
+        folder_path = self.get_argument("folder_path")
+        if os.path.exists(folder_path):
+            folders = os.listdir(folder_path)
+            self.write("\n".join(folders))
 
     def set_default_headers(self):
         self.set_header('Content-type', 'application/json;charset=utf-8')
