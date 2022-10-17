@@ -136,7 +136,7 @@ var filedata=editor.doc.getValue();
 var xhr = new XMLHttpRequest();
 xhr.open("post", "/file", true);
 xhr.setRequestHeader("Content-Type", "application/json");
-var data = JSON.stringify({"file_name":filename,"file_data": filedata});
+var data = JSON.stringify({"file_name":filename,"file_path":filepath,"file_data": filedata});
 xhr.send(data);
 var date = new Date();
 $("#doc-status").text(filename+" "+date.getHours()+"-"+date.getMinutes()+"-"+date.getSeconds()+" saved ");
